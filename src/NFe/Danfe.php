@@ -3093,7 +3093,7 @@ class Danfe extends Common
         }
         return $saida;
     }
-    
+
     private function imagePNGtoJPG($original)
     {
         $image = imagecreatefrompng($original);
