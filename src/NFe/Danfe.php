@@ -15,7 +15,7 @@ class Danfe extends Common
     const SIT_DENEGADA = 2;
     const SIT_DPEC = 3;
     const SIT_NONE = 0;
-    
+
     /**
      * alinhamento padrão do logo (C-Center)
      *
@@ -48,7 +48,7 @@ class Danfe extends Common
     //###########################################################
     // INÍCIO ATRIBUTOS DE PARÂMETROS DE EXIBIÇÃO
     //###########################################################
-    
+
     /**
      * Parâmetro para exibir ou ocultar os valores do PIS/COFINS.
      * @var boolean
@@ -81,11 +81,11 @@ class Danfe extends Common
      * @var boolean
      */
     public $descProdQuebraLinha = true;
-    
+
     //###########################################################
     //PROPRIEDADES DA CLASSE
     //###########################################################
-    
+
     /**
      * objeto fpdf()
      * @var object
@@ -924,7 +924,7 @@ class Danfe extends Common
         }
         return $texto;
     }
-    
+
     /**
      * Dados brutos do PDF
      * @return string
@@ -2718,10 +2718,13 @@ class Danfe extends Common
               $x = $this->wCanhoto;
         }
         $aFont = array('font'=>$this->fontePadrao, 'size'=>6, 'style'=>'I');
-        $texto = "Impresso em ". date('d/m/Y') . " as " . date('H:i:s');
+
+        $date = new \DateTime();
+        $date->setTimeZone(new \DateTimeZone('America/Sao_Paulo'));
+        $texto = "Impresso em ". $date->format('d/m/Y') . " às " . $date->format('H:i:s');
         $this->pTextBox($x, $y, $w, 0, $texto, $aFont, 'T', 'L', false);
-        $texto = "DanfeNFePHP ver. " . $this->version .  "  Powered by NFePHP (GNU/GPLv3 GNU/LGPLv3) © www.nfephp.org";
-        $this->pTextBox($x, $y, $w, 0, $texto, $aFont, 'T', 'R', false, 'http://www.nfephp.org');
+        $texto = "Gerado por DataHex ERP - www.datahex.com.br - (22) 3512-7000";
+        $this->pTextBox($x, $y, $w, 0, $texto, $aFont, 'T', 'R', false, 'http://www.datahex.com.br/');
     }
 
     /**
