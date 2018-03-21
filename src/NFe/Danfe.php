@@ -431,7 +431,11 @@ class Danfe extends Common
      */
     public function printDocument($nome = '', $destino = 'I', $printer = '')
     {
-        return $this->printDANFE($nome, $destino, $printer);
+        $arq = $this->pdf->Output($nome, $destino);
+        if ($destino == 'S') {
+            //aqui pode entrar a rotina de impressão direta
+        }
+        return $arq;
     }
 
     /**
