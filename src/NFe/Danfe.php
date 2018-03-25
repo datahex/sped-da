@@ -299,6 +299,11 @@ class Danfe extends Common
      * @var integer
      */
     protected $debugMode=2;
+    /**
+     * Creditos para integrador
+     * @var string
+     */
+    protected $creditos = '';
 
     /**
      * __construct
@@ -382,6 +387,15 @@ class Danfe extends Common
                 throw new InvalidArgumentException("O xml do DANFE deve ser uma NF-e modelo 55");
             }
         }
+    }
+
+    /**
+     * Add the credits to the integrator in the footer message
+     * @param string $message
+     */
+    public function creditsIntegratorFooter($message = '')
+    {
+        $this->creditos = trim($message);
     }
 
     /**
