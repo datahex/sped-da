@@ -23,7 +23,7 @@ use NFePHP\DA\Legacy\Common;
 class Daevento extends Common
 {
     public $chNFe;
-    
+
     protected $logoAlign = 'C';
     protected $yDados = 0;
     protected $debugMode = 0;
@@ -57,7 +57,7 @@ class Daevento extends Common
     protected $dhRegEvento;
     protected $nProt;
     protected $tpEvento;
-    
+
     private $dom;
     private $procEventoNFe;
     private $evento;
@@ -546,11 +546,13 @@ class Daevento extends Common
         $aFont = ['font' => $this->fontePadrao,'size' => 10,'style' => 'I'];
         $this->pTextBox($x, $y, $w, 20, $texto, $aFont, 'T', 'C', 0, '', false);
         $y = $this->hPrint - 4;
-        $texto = "Impresso em  " . date('d/m/Y   H:i:s');
+        $date = new \DateTime();
+        $date->setTimeZone(new \DateTimeZone('America/Sao_Paulo'));
+        $texto = "Impresso em ". $date->format('d/m/Y') . " às " . $date->format('H:i:s');
         $w = $this->wPrint - 4;
         $aFont = ['font' => $this->fontePadrao,'size' => 6,'style' => 'I'];
         $this->pTextBox($x, $y, $w, 4, $texto, $aFont, 'T', 'L', 0, '');
-        $texto = "Daevento ver. " . $this->version . "  Powered by NFePHP (GNU/GPLv3 GNU/LGPLv3) © www.nfephp.org";
+        $texto = "Gerado por DataHex ERP - www.datahex.com.br - (22) 3512-7000";
         $aFont = ['font' => $this->fontePadrao,'size' => 6,'style' => 'I'];
         $this->pTextBox($x, $y, $w, 4, $texto, $aFont, 'T', 'R', 0, 'http://www.nfephp.org');
     }
