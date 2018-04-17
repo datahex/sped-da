@@ -554,7 +554,7 @@ class Daevento extends Common
         $this->pTextBox($x, $y, $w, 4, $texto, $aFont, 'T', 'L', 0, '');
         $texto = "Gerado por DataHex ERP - www.datahex.com.br - (22) 3512-7000";
         $aFont = ['font' => $this->fontePadrao,'size' => 6,'style' => 'I'];
-        $this->pTextBox($x, $y, $w, 4, $texto, $aFont, 'T', 'R', 0, 'http://www.nfephp.org');
+        $this->pTextBox($x, $y, $w, 4, $texto, $aFont, 'T', 'R', 0, 'http://www.datahex.com.br/');
     }
 
     /**
