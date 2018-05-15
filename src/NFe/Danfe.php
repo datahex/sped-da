@@ -451,7 +451,8 @@ class Danfe extends Common
         $depecNumReg = '',
         $margSup = 2,
         $margEsq = 2,
-        $margInf = 2
+        $margInf = 2,
+        $teste = false
     ) {
         //se a orientação estiver em branco utilizar o padrão estabelecido na NF
         if ($orientacao == '') {
@@ -461,6 +462,7 @@ class Danfe extends Common
                 $orientacao = 'L';
             }
         }
+        $this->teste = $teste;
         $this->orientacao = $orientacao;
         $this->pAdicionaLogoPeloCnpj();
         $this->papel = $papel;
@@ -1341,7 +1343,62 @@ class Danfe extends Common
             $this->pdf->SetTextColor(0, 0, 0);
         }
         //indicar sem valor
-        if ($tpAmb != 1) {
+        if(!$this->teste) {
+            if ($tpAmb != 1) {
+                $x = 10;
+                if ($this->orientacao == 'P') {
+                    $y = round($this->hPrint*2/3, 0);
+                } else {
+                    $y = round($this->hPrint/2, 0);
+                }
+                $h = 5;
+                $w = $maxW-(2*$x);
+                $this->pdf->SetTextColor(90, 90, 90);
+                $texto = "SEM VALOR FISCAL";
+                $aFont = array('font'=>$this->fontePadrao, 'size'=>48, 'style'=>'B');
+                $this->pTextBox($x, $y, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                $aFont = array('font'=>$this->fontePadrao, 'size'=>30, 'style'=>'B');
+                $texto = "AMBIENTE DE HOMOLOGAÇÃO";
+                $this->pTextBox($x, $y+14, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                $this->pdf->SetTextColor(0, 0, 0);
+            } else {
+                $x = 10;
+                if ($this->orientacao == 'P') {
+                    $y = round($this->hPrint*2/3, 0);
+                } else {
+                    $y = round($this->hPrint/2, 0);
+                }//fim orientacao
+                $h = 5;
+                $w = $maxW-(2*$x);
+                $this->pdf->SetTextColor(90, 90, 90);
+                //indicar FALTA DO PROTOCOLO se NFe não for em contingência
+                if (($this->tpEmis == 2 || $this->tpEmis == 5) && !$this->pNotaDPEC()) {
+                    //Contingência
+                    $texto = "DANFE Emitido em Contingência";
+                    $aFont = array('font'=>$this->fontePadrao, 'size'=>48, 'style'=>'B');
+                    $this->pTextBox($x, $y, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                    $aFont = array('font'=>$this->fontePadrao, 'size'=>30, 'style'=>'B');
+                    $texto = "devido à problemas técnicos";
+                    $this->pTextBox($x, $y+12, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                } else {
+                    if (!isset($this->nfeProc)) {
+                        if (!$this->pNotaDPEC()) {
+                            $texto = "SEM VALOR FISCAL";
+                            $aFont = array('font'=>$this->fontePadrao, 'size'=>48, 'style'=>'B');
+                            $this->pTextBox($x, $y, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                        }
+                        $aFont = array('font'=>$this->fontePadrao, 'size'=>30, 'style'=>'B');
+                        $texto = "FALTA PROTOCOLO DE APROVAÇÃO DA SEFAZ";
+                        if (!$this->pNotaDPEC()) {
+                            $this->pTextBox($x, $y+12, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                        } else {
+                            $this->pTextBox($x, $y+25, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
+                        }
+                    }//fim nefProc
+                }//fim tpEmis
+                $this->pdf->SetTextColor(0, 0, 0);
+            }
+        } else {
             $x = 10;
             if ($this->orientacao == 'P') {
                 $y = round($this->hPrint*2/3, 0);
@@ -1355,44 +1412,8 @@ class Danfe extends Common
             $aFont = array('font'=>$this->fontePadrao, 'size'=>48, 'style'=>'B');
             $this->pTextBox($x, $y, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
             $aFont = array('font'=>$this->fontePadrao, 'size'=>30, 'style'=>'B');
-            $texto = "AMBIENTE DE HOMOLOGAÇÃO";
+            $texto = "DANFE DE TESTE";
             $this->pTextBox($x, $y+14, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
-            $this->pdf->SetTextColor(0, 0, 0);
-        } else {
-            $x = 10;
-            if ($this->orientacao == 'P') {
-                $y = round($this->hPrint*2/3, 0);
-            } else {
-                $y = round($this->hPrint/2, 0);
-            }//fim orientacao
-            $h = 5;
-            $w = $maxW-(2*$x);
-            $this->pdf->SetTextColor(90, 90, 90);
-            //indicar FALTA DO PROTOCOLO se NFe não for em contingência
-            if (($this->tpEmis == 2 || $this->tpEmis == 5) && !$this->pNotaDPEC()) {
-                //Contingência
-                $texto = "DANFE Emitido em Contingência";
-                $aFont = array('font'=>$this->fontePadrao, 'size'=>48, 'style'=>'B');
-                $this->pTextBox($x, $y, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
-                $aFont = array('font'=>$this->fontePadrao, 'size'=>30, 'style'=>'B');
-                $texto = "devido à problemas técnicos";
-                $this->pTextBox($x, $y+12, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
-            } else {
-                if (!isset($this->nfeProc)) {
-                    if (!$this->pNotaDPEC()) {
-                        $texto = "SEM VALOR FISCAL";
-                        $aFont = array('font'=>$this->fontePadrao, 'size'=>48, 'style'=>'B');
-                        $this->pTextBox($x, $y, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
-                    }
-                    $aFont = array('font'=>$this->fontePadrao, 'size'=>30, 'style'=>'B');
-                    $texto = "FALTA PROTOCOLO DE APROVAÇÃO DA SEFAZ";
-                    if (!$this->pNotaDPEC()) {
-                        $this->pTextBox($x, $y+12, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
-                    } else {
-                        $this->pTextBox($x, $y+25, $w, $h, $texto, $aFont, 'C', 'C', 0, '');
-                    }
-                }//fim nefProc
-            }//fim tpEmis
             $this->pdf->SetTextColor(0, 0, 0);
         }
         return $oldY;
