@@ -417,6 +417,10 @@ class Danfe extends Common
         );
     }
 
+    public function montaDANFETeste() {
+        return $this->montaDANFE('', 'A4', 'C', self::SIT_NONE, false, '', 2, 2, 2, true);
+    }
+
     /**
      * printDocument
      *
