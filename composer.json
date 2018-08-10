@@ -19,7 +19,6 @@
     ],
     "require": {
         "php" : ">=5.6",
-        "endroid/qrcode": "^2",
         "tecnickcom/tc-lib-barcode": "^1.15"
     },
     "require-dev": {
