@@ -2794,7 +2794,7 @@ class Danfe extends Common
         $date->setTimeZone(new \DateTimeZone('America/Sao_Paulo'));
         $texto = "Impresso em ". $date->format('d/m/Y') . " às " . $date->format('H:i:s');
         $this->pTextBox($x, $y, $w, 0, $texto, $aFont, 'T', 'L', false);
-        $texto = "Gerado por DataHex ERP - www.datahex.com.br - (22) 3512-7000";
+        $texto = "Gerado por DataHex Tecnologia - www.datahex.com.br - (22) 3512-7000";
         $this->pTextBox($x, $y, $w, 0, $texto, $aFont, 'T', 'R', false, 'http://www.datahex.com.br/');
     }
 
