@@ -231,6 +231,10 @@ class Danfce extends Common
         $this->papel = $aPap;
     }
 
+    public function montaDANFETeste() {
+        return $this->montaDANFE('P', '', 'C', false, '', true);
+    }
+
     public function monta(
         $orientacao = 'P',
         $papel = '',
@@ -246,7 +250,8 @@ class Danfce extends Common
         $papel = '',
         $logoAlign = 'C',
         $classPdf = false,
-        $depecNumReg = ''
+        $depecNumReg = '',
+        $teste = false
     ) {
         $qtdItens = $this->det->length;
         $qtdPgto = $this->pag->length;
@@ -334,7 +339,7 @@ class Danfce extends Common
             $hcliente = 6;// para cliente (FIXO)
         } else {
             $hcliente = 12;
-        }// para cliente (FIXO)};
+        }// para cliente (FIXO)
         $hQRCode = 50;// para qrcode (FIXO)
         $hCabecItens = 4;//cabeçalho dos itens
 
@@ -343,6 +348,15 @@ class Danfce extends Common
         $totPag = 1;
         $pag = 1;
         $x = $xInic;
+        //COLOCA A MARCA D'AGUA SE FOR PRE-VISUALIZACAO
+        if ($teste) {
+            $this->pdf->setTextColor(240,240,240);
+            $aFont = array('font'=>$this->fontePadrao, 'size'=>50, 'style'=>'');
+            for ($i = -10; $i <= 190; $i += 20) {
+                $this->pTextBox(-50, $i, 190, 20, 'Preview Preview Preview', $aFont, 'T', 'L', 0, '', false);
+            }
+            $this->pdf->setTextColor(0,0,0);
+        }
         //COLOCA CABEÇALHO
         $y = $yInic;
         $y = $this->pCabecalhoDANFE($x, $y, $hcabecalho, $pag, $totPag);
@@ -360,7 +374,7 @@ class Danfce extends Common
         $y = $this->pPagamentosDANFE($x, $y, $hpagamentos);
         //COLOCA MENSAGEM FISCAL
         $y = $xInic + $hcabecalho + $hcabecalhoSecundario + $hprodutos + $hTotal+ $hpagamentos;
-        $y = $this->pFiscalDANFE($x, $y, $hmsgfiscal);
+        $y = $this->pFiscalDANFE($x, $y, $hmsgfiscal, $teste);
         //COLOCA CONSUMIDOR
         $y = $xInic + $hcabecalho + $hcabecalhoSecundario + $hprodutos + $hTotal + $hpagamentos + $hmsgfiscal;
         $y = $this->pConsumidorDANFE($x, $y, $hcliente);
@@ -761,7 +775,7 @@ class Danfce extends Common
         }
     }
 
-    protected function pFiscalDANFE($x = 0, $y = 0, $h = 0)
+    protected function pFiscalDANFE($x = 0, $y = 0, $h = 0, $teste = false)
     {
         $y += 6;
         $margemInterna = $this->margemInterna;
@@ -809,7 +823,7 @@ class Danfce extends Common
         $yTit2 = $y + ($hLinha*5);
         $this->pTextBox($x, $yTit2, $w, $hLinha, $texto, $aFontTit, 'C', 'C', 0, '', false);
         $yTex3 = $y + ($hLinha*6);
-        $texto = $chNFe;
+        $texto = $teste ? '00000000000000000000000000000000000000000000' : $chNFe;
         $this->pTextBox($x, $yTex3, $w, $hLinha, $texto, $aFontTex, 'C', 'C', 0, '', false);
     }
 
