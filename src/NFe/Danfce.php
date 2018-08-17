@@ -900,8 +900,8 @@ class Danfce extends Common
 
     protected function infDatahex($y = 0)
     {
-        $aFontTex = array('font'=>$this->fontePadrao, 'size'=>10, 'style'=>'I');
-        $this->pTextBox(20, $y+5, 40, 15, "Gerado por DataHex Tecnologia - www.datahex.com.br - (22) 3512-7000", $aFontTex, 'T', 'R', 0, 'http://www.datahex.com.br/');
+        $aFontTex = array('font'=>$this->fontePadrao, 'size'=>20, 'style'=>'I');
+        $this->pTextBox(10, $y, 60, 20, "Gerado por DataHex Tecnologia - www.datahex.com.br - (22) 3512-7000", $aFontTex, 'T', 'R', 0, 'http://www.datahex.com.br/');
         return $y + 15;
     }
 
