@@ -374,7 +374,7 @@ class Danfce extends Common
         $y = $this->pPagamentosDANFE($x, $y, $hpagamentos);
         //COLOCA MENSAGEM FISCAL
         $y = $xInic + $hcabecalho + $hcabecalhoSecundario + $hprodutos + $hTotal+ $hpagamentos;
-        $y = $this->pFiscalDANFE($x, $y, $hmsgfiscal, $teste);
+        $y = $this->pFiscalDANFE($x, $y, $hmsgfiscal);
         //COLOCA CONSUMIDOR
         $y = $xInic + $hcabecalho + $hcabecalhoSecundario + $hprodutos + $hTotal + $hpagamentos + $hmsgfiscal;
         $y = $this->pConsumidorDANFE($x, $y, $hcliente);
@@ -775,7 +775,7 @@ class Danfce extends Common
         }
     }
 
-    protected function pFiscalDANFE($x = 0, $y = 0, $h = 0, $teste = false)
+    protected function pFiscalDANFE($x = 0, $y = 0, $h = 0)
     {
         $y += 6;
         $margemInterna = $this->margemInterna;
@@ -823,7 +823,7 @@ class Danfce extends Common
         $yTit2 = $y + ($hLinha*5);
         $this->pTextBox($x, $yTit2, $w, $hLinha, $texto, $aFontTit, 'C', 'C', 0, '', false);
         $yTex3 = $y + ($hLinha*6);
-        $texto = $teste ? '00000000000000000000000000000000000000000000' : $chNFe;
+        $texto = $chNFe;
         $this->pTextBox($x, $yTex3, $w, $hLinha, $texto, $aFontTex, 'C', 'C', 0, '', false);
     }
 
