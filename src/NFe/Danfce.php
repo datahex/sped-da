@@ -1218,7 +1218,7 @@ class Danfce extends Common
         $idToken = '000001',
         $token = ''
     ) {
-        $nVersao = '100';
+        $nVersao = '200';
         $dhHex = self::str2Hex($dhEmi);
         $digHex = self::str2Hex($digVal);
         $seq = '';
