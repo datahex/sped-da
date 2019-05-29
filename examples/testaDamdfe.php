@@ -12,4 +12,4 @@ try {
     $id = $damdfe->printMDFe('', 'I');
 } catch (Exception $e) {
     echo "Ocorreu um erro durante o processamento :" . $e->getMessage();
-}    
+}
